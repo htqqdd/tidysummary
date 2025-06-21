@@ -18,7 +18,7 @@
 #'     \itemize{
 #'       \item \code{valid}: All valid variable names after checks
 #'       \item \code{continuous}: Sublist of continuous variables (further divided by normality/equal variance)
-#'       \item \code{categorical}: Sublist of categorical variables (further divided by type/sample size)
+#'       \item \code{categorical}: Sublist of categorical variables (further divided by ordered/expected frequency)
 #'     }
 #'   \item \code{group}: Grouping variable name
 #'   \item \code{overall_n}: Total number of observations

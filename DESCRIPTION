@@ -1,6 +1,6 @@
 Package: tidysummary
-Title: Elegant functions for routine clinical data analysis
-Version: 0.0.0.9000
+Title: A Elegant Approach to Summarizing Clinical Data
+Version: 0.1.0
 Authors@R: 
     person("Xiang", "Li", , "htqqdd@126.com", role = c("aut", "cre"))
 Description: This package streamlines the analysis of clinical data by
@@ -23,3 +23,7 @@ Imports:
     stringr,
     tibble,
     tidyr
+Suggests: 
+    knitr,
+    rmarkdown
+VignetteBuilder: knitr

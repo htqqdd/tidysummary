@@ -1,10 +1,10 @@
-
 # tidysummary
 
 <!-- badges: start -->
+
 <!-- badges: end -->
 
-The goal of tidysummary is to streamlines the analysis of clinical data by automatically selecting appropriate statistical descriptions and inference methods based on variable types.
+The goal of tidysummary is to streamlines the analysis of clinical data by automatically selecting appropriate statistical descriptions and inference methods based on variable types. See [the vignette](https://htqqdd.github.io/tidysummary/) for more details.
 
 ## Installation
 
@@ -17,7 +17,7 @@ if (!requireNamespace("remotes", quietly = TRUE)) {
 remotes::install_github("htqqdd/tidysummary")
 ```
 
-## Example
+## Usage
 
 A quick example which shows you how to start:
 
@@ -28,18 +28,3 @@ result <- iris %>%
   add_summary(add_overall = T) %>%
   add_p()
 ```
-
-A real-world example with your dataset:
-
-``` r
-library(tidysummary)
-result <- your_dataset %>%
-  add_var(var = c("age", "sex", "BMI"), group = "group", norm = "auto") %>%
-  add_summary(add_overall = TRUE,
-              continuous_format = "{mean} ± {SD}",
-              categorical_format = "{n} ({pct})",
-              digit = 2) %>%
-  add_p(digit = 3, asterisk = F)
-```
-
-
