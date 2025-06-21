@@ -1,0 +1,25 @@
+Package: tidysummary
+Title: Elegant functions for routine clinical data analysis
+Version: 0.0.0.9000
+Authors@R: 
+    person("Xiang", "Li", , "htqqdd@126.com", role = c("aut", "cre"))
+Description: This package streamlines the analysis of clinical data by
+             automatically selecting appropriate statistical descriptions and
+             inference methods based on variable types.
+License: MIT + file LICENSE
+Encoding: UTF-8
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.3.2
+Imports: 
+    car,
+    cli,
+    dplyr,
+    fBasics,
+    ggplot2,
+    glue,
+    nortest,
+    rlang,
+    stats,
+    stringr,
+    tibble,
+    tidyr
