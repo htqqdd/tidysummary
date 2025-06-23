@@ -65,10 +65,10 @@
 
 
 <dt>norm</dt>
-<dd><p>Control parameter for test behavior. Accepts:</p><ul><li><p><code>'auto'</code>:Automatically decide based on p-values, default</p></li>
-<li><p><code>'ask'</code>:Plots QQ plots and prompts for decision, if any p-value &lt; 0.05</p></li>
-<li><p><code>TRUE</code>/<code>'true'</code>: always returns <code>TRUE</code></p></li>
-<li><p><code>FALSE</code>/<code>'false'</code>: always returns <code>FALSE</code></p></li>
+<dd><p>Control parameter for test behavior. Accepts:</p><ul><li><p><code>'auto'</code>: Automatically decide based on p-values, but the same as <code>'ask'</code> when n &gt; 1000, default</p></li>
+<li><p><code>'ask'</code>: Show p-values, plots QQ plots and prompts for decision</p></li>
+<li><p><code>TRUE</code>/<code>'true'</code>: Always returns <code>TRUE</code></p></li>
+<li><p><code>FALSE</code>/<code>'false'</code>: Always returns <code>FALSE</code></p></li>
 </ul></dd>
 
 </dl></div>
@@ -79,24 +79,25 @@
 <p>A logical value:</p><ul><li><p><code>TRUE</code>: data are normally distributed</p></li>
 <li><p><code>FALSE</code>: data are not normally distributed</p></li>
 </ul></div>
-    <div id="testing-methodology">
-    <h2>Testing Methodology</h2>
+    <div id="methodology-for-p-values">
+    <h2>Methodology for p-values</h2>
     
 
 <p>Automatically selects test based on sample size per group:</p><ul><li><p>n &lt; 3: Too small, assuming non-normal</p></li>
 <li><p>3 ≤ n ≤ 50: Shapiro-Wilk test</p></li>
-<li><p>n &gt; 50: D'Agostino skewness test</p></li>
+<li><p>50 &lt; n&lt;= 1000: D'Agostino Chi2 test, instead of Kolmogorov-Smirnov test</p></li>
+<li><p>n &gt; 1000: Show p-values, plots QQ plots and prompts for decision
+references: 1.https://www.graphpad.com/guides/prism/latest/statistics/stat_choosing_a_normality_test.htm
+2.D’Agostino, R.B. (1971) An Omnibus Test of Normality for Moderate and Large Size Samples. Biometrika, 58, 341-348.</p></li>
 </ul></div>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span></span>
-<span class="r-in"><span><span class="co"># Automatic mode</span></span></span>
-<span class="r-in"><span><span class="fu">normal_test</span><span class="op">(</span><span class="va">iris</span>, <span class="st">"Sepal.Length"</span>, <span class="st">"Species"</span>, norm <span class="op">=</span> <span class="st">"auto"</span><span class="op">)</span></span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu">normal_test</span><span class="op">(</span><span class="va">iris</span>, <span class="st">"Sepal.Length"</span>, <span class="st">"Species"</span>, norm <span class="op">=</span> <span class="st">"auto"</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] TRUE</span>
+<span class="r-in"><span><span class="fu">normal_test</span><span class="op">(</span><span class="va">iris</span>, <span class="st">"Sepal.Length"</span>, <span class="st">"Species"</span>, norm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] TRUE</span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># Interactive mode</span></span></span>
-<span class="r-in"><span><span class="fu">normal_test</span><span class="op">(</span><span class="va">mtcars</span>, <span class="st">"mpg"</span>, <span class="st">"cyl"</span>, norm <span class="op">=</span> <span class="st">"ask"</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="op">}</span></span></span>
 </code></pre></div>
     </div>
   </div>

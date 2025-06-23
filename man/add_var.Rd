@@ -4,7 +4,7 @@
 \alias{add_var}
 \title{Prepare variables for add_summary}
 \usage{
-add_var(data, var = NULL, group = "group", norm = "auto")
+add_var(data, var = NULL, group = "group", norm = "auto", center = "median")
 }
 \arguments{
 \item{data}{A data frame containing the variables to analyze, with variables at columns and observations at rows.}
@@ -15,16 +15,17 @@ add_var(data, var = NULL, group = "group", norm = "auto")
 
 \item{norm}{Control parameter for normality tests. Accepts:
 \itemize{
-\item \code{'auto'}:Automatically decide normality based on p-values, default
-\item \code{'ask'}:Plots QQ plots and prompts for decision, if any p-value < 0.05
-\item \code{TRUE}/\code{'true'}: always assuming data are normally distributed
-\item \code{FALSE}/\code{'false'}: always assuming data are non-normally distributed
+\item \code{'auto'}: Automatically decide based on p-values, but the same as \code{'ask'} when n > 1000, default
+\item \code{'ask'}: Show p-values, plots QQ plots and prompts for decision
+\item \code{TRUE}/\code{'true'}: Always assuming data are normally distributed
+\item \code{FALSE}/\code{'false'}: Always assuming data are non-normally distributed
 }}
+
+\item{center}{A character string specifying the center to use in Levene's test for equality of variances. Default is \code{"median"}, which is more robust than the mean.}
 }
 \value{
-A list containing:
+A modified data frame with an attribute \code{'add_var'} containing a list of categorized variables and their properties:
 \itemize{
-\item \code{data}: Modified dataset
 \item \code{var}: List of categorized variables:
 \itemize{
 \item \code{valid}: All valid variable names after checks

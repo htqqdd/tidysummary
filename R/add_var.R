@@ -6,14 +6,14 @@
 #' @param var A character vector of variable names to include. If `NULL`, by default, all columns except the `group` column will be used.
 #' @param group A character string specifying the grouping variable in `data`. If not specified, `'group'`, by default.
 #' @param norm Control parameter for normality tests. Accepts:
-#'   - `'auto'`:Automatically decide normality based on p-values, default
-#'   - `'ask'`:Plots QQ plots and prompts for decision, if any p-value < 0.05
-#'   - `TRUE`/`'true'`: always assuming data are normally distributed
-#'   - `FALSE`/`'false'`: always assuming data are non-normally distributed
+#'   - `'auto'`: Automatically decide based on p-values, but the same as `'ask'` when n > 1000, default
+#'   - `'ask'`: Show p-values, plots QQ plots and prompts for decision
+#'   - `TRUE`/`'true'`: Always assuming data are normally distributed
+#'   - `FALSE`/`'false'`: Always assuming data are non-normally distributed
+#' @param center A character string specifying the center to use in Levene's test for equality of variances. Default is `"median"`, which is more robust than the mean.
 #'
-#' @return A list containing:
+#' @return A modified data frame with an attribute `'add_var'` containing a list of categorized variables and their properties:
 #' \itemize{
-#'   \item \code{data}: Modified dataset
 #'   \item \code{var}: List of categorized variables:
 #'     \itemize{
 #'       \item \code{valid}: All valid variable names after checks
@@ -33,7 +33,7 @@
 #' datalist <- add_var(iris, var = c("Sepal.Length", "Species"), group = "Species")
 #' }
 #' @export
-add_var <- function(data, var = NULL, group = "group", norm = "auto"){
+add_var <- function(data, var = NULL, group = "group", norm = "auto", center = "median"){
 
   #检查data参数
   if (!is.data.frame(data)) {
@@ -105,7 +105,7 @@ add_var <- function(data, var = NULL, group = "group", norm = "auto"){
     norm_var <- continuous_var[sapply(continuous_var, function(x) normal_test(data, x, group, norm))]
     unnorm_var <- setdiff(continuous_var, norm_var)
     if (length(norm_var) > 0) {
-      norm_equal_var <- norm_var[sapply(norm_var, function(x) equal_test(data, x, group))]
+      norm_equal_var <- norm_var[sapply(norm_var, function(x) equal_test(data, x, group, center))]
       norm_unequal_var <- setdiff(norm_var, norm_equal_var)
     } else {
       norm_equal_var <- norm_unequal_var <- c()
@@ -134,8 +134,7 @@ add_var <- function(data, var = NULL, group = "group", norm = "auto"){
   }
 
 
-  datalist = list(
-    data = data,
+  attr(data, "add_var") <- list(
     var = list(
       valid = valid_var,
       continuous = list(
@@ -157,12 +156,7 @@ add_var <- function(data, var = NULL, group = "group", norm = "auto"){
     group_nlevels = nlevels(data[[group]]),
     group_levels = levels(data[[group]]),
     norm = norm)
-  class(datalist) <- c("add_var", "list")
-  return(datalist)
-}
 
 
-#' @export
-print.add_var <- function(x, ...) {
-  cat("Variables:", x$var, "\n")
+  return(data)
 }

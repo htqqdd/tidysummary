@@ -17,8 +17,8 @@ small_test(data, var, group)
 A character string with one of three values:
 \itemize{
 \item \code{"not_small"}: Sample size >=40 and all expected frequencies >=5
-\item \code{"small"}: Sample size >=40, all expected frequencies >=1 and at least one <5
-\item \code{"very_small"}: Sample size <40 OR any expected frequency <1
+\item \code{"small"}: Sample size >=40, all expected frequencies >=1 and at least one <5, only for 2*2 contingency tables
+\item \code{"very_small"}: Other conditions, including sample size <40 or any expected frequency <1
 }
 }
 \description{

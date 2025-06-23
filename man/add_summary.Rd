@@ -5,7 +5,7 @@
 \title{Add summary statistics to a add_var object}
 \usage{
 add_summary(
-  datalist,
+  data,
   add_overall = TRUE,
   continuous_format = NULL,
   norm_continuous_format = "{mean} ± {SD}",
@@ -16,7 +16,7 @@ add_summary(
 )
 }
 \arguments{
-\item{datalist}{A list object of class \code{"add_var"} containing data and categorizing variables.}
+\item{data}{A data frame that has been processed by \code{add_var()}.}
 
 \item{add_overall}{Logical indicating whether to include an "Overall" summary column. \code{TRUE}, by default.}
 
@@ -38,7 +38,7 @@ add_summary(
 \item{digit}{digit A numeric determine decimal.}
 }
 \value{
-Modified \code{datalist} object with new element \code{summary} containing:
+A data frame containing summary statistics with the following columns:
 \itemize{
 \item \code{variable}: Variable name
 \item \code{Overall (n=X)}: Summary statistics for all data, if \code{add_overall=TRUE}
@@ -46,12 +46,12 @@ Modified \code{datalist} object with new element \code{summary} containing:
 }
 }
 \description{
-This function generates summary statistics for variables stored in a \code{add_var} object, with options to format outputs.
+This function generates summary statistics for variables from a data frame that has been processed by \code{add_var()}, with options to format outputs.
 }
 \examples{
 \dontrun{
-# Assuming `my_data` is a properly formatted 'add_var' object:
+# Assuming `my_data` is a processed by `add_var()`:
 result <- add_summary(my_data, add_overall = TRUE)
-result <- add_summary(my_data, continuous_format = "{mean}, ({SD})",)
+result <- add_summary(my_data, continuous_format = "{mean}, ({SD})")
 }
 }

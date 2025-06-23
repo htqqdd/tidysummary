@@ -19,9 +19,9 @@
 #' @return A data frame with:
 #'   * `variable` column containing original variable names
 #'   * Group-specific summary columns with formatted statistics
-#'
+#' @noRd
 create_summary <- function(data, v = NULL, group = NULL, summary_format = NULL, type = c("continuous", "categorical"), binary_show = NULL, digit = NULL){
-  . <- variable <- n <- pct <- value <- NULL #避免R CMD check警告
+  . <- pct <- value <- variable <- NULL #避免R CMD check警告
 
   #连续性变量
   if (type == "continuous") {
@@ -91,9 +91,9 @@ create_summary <- function(data, v = NULL, group = NULL, summary_format = NULL, 
 
 #' Add summary statistics to a add_var object
 #'
-#' This function generates summary statistics for variables stored in a `add_var` object, with options to format outputs.
+#' This function generates summary statistics for variables from a data frame that has been processed by `add_var()`, with options to format outputs.
 #'
-#' @param datalist A list object of class `"add_var"` containing data and categorizing variables.
+#' @param data A data frame that has been processed by `add_var()`.
 #' @param add_overall Logical indicating whether to include an "Overall" summary column. `TRUE`, by default.
 #' @param continuous_format Format string to override both normal/abnormal continuous formats. Accepted placeholders are `{mean}`, `{SD}`, `{median}`, `{Q1}`, `{Q3}`.
 #' @param norm_continuous_format Format string for normally distributed continuous variables. Default is `"{mean} ± {SD}"`. Accepted placeholders same as `continuous_format`.
@@ -104,7 +104,7 @@ create_summary <- function(data, v = NULL, group = NULL, summary_format = NULL, 
 #'   - `"last"`: show only last level, default
 #'   - `"all"`: show all levels
 #' @param digit digit A numeric determine decimal.
-#' @return Modified `datalist` object with new element `summary` containing:
+#' @return A data frame containing summary statistics with the following columns:
 #'   \itemize{
 #'     \item `variable`: Variable name
 #'     \item `Overall (n=X)`: Summary statistics for all data, if `add_overall=TRUE`
@@ -113,12 +113,12 @@ create_summary <- function(data, v = NULL, group = NULL, summary_format = NULL, 
 #'
 #' @examples
 #' \dontrun{
-#' # Assuming `my_data` is a properly formatted 'add_var' object:
+#' # Assuming `my_data` is a processed by `add_var()`:
 #' result <- add_summary(my_data, add_overall = TRUE)
-#' result <- add_summary(my_data, continuous_format = "{mean}, ({SD})",)
+#' result <- add_summary(my_data, continuous_format = "{mean}, ({SD})")
 #' }
 #' @export
-add_summary <- function(datalist,
+add_summary <- function(data,
                         add_overall = TRUE,
                         continuous_format = NULL,
                         norm_continuous_format = "{mean} \u00b1 {SD}",
@@ -129,9 +129,9 @@ add_summary <- function(datalist,
 
   overall <- variable <- NULL #避免R CMD check警告
 
-  #检查datalist参数
-  if (!inherits(datalist, "add_var")) {
-    cli_alert_danger("'datalist' must be a add_var object")
+  #检查add_var属性
+  if (!"add_var" %in% names(attributes(data))) {
+    cli_alert_danger("must use add_var() for 'data' before using add_summary()")
     stop()
   }
 
@@ -175,8 +175,8 @@ add_summary <- function(datalist,
     stop()
   }
 
-
-  data = datalist$data
+  #获取add_var属性
+  datalist = attr(data, "add_var", exact = TRUE)
   group = datalist$group
   valid_var = datalist$var$valid
   continuous_var = datalist$var$continuous$all
@@ -216,6 +216,8 @@ add_summary <- function(datalist,
                            paste0(datalist$group_levels, " (n=", datalist$group_n[datalist$group_levels], ")"))
   }
 
-  datalist$summary <- summary
-  return(datalist)
+  attr(summary, "add_var") <- datalist
+  attr(summary, "add_summary") <- list(input_data = data)
+
+  return(summary)
 }

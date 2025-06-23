@@ -15,10 +15,10 @@ normal_test(data = NULL, var = NULL, group = NULL, norm = "auto")
 
 \item{norm}{Control parameter for test behavior. Accepts:
 \itemize{
-\item \code{'auto'}:Automatically decide based on p-values, default
-\item \code{'ask'}:Plots QQ plots and prompts for decision, if any p-value < 0.05
-\item \code{TRUE}/\code{'true'}: always returns \code{TRUE}
-\item \code{FALSE}/\code{'false'}: always returns \code{FALSE}
+\item \code{'auto'}: Automatically decide based on p-values, but the same as \code{'ask'} when n > 1000, default
+\item \code{'ask'}: Show p-values, plots QQ plots and prompts for decision
+\item \code{TRUE}/\code{'true'}: Always returns \code{TRUE}
+\item \code{FALSE}/\code{'false'}: Always returns \code{FALSE}
 }}
 }
 \value{
@@ -31,22 +31,21 @@ A logical value:
 \description{
 Conducts normality tests for a specified variable, optionally by group. Supports automatic testing and interactive visualization.
 }
-\section{Testing Methodology}{
+\section{Methodology for p-values}{
 
 Automatically selects test based on sample size per group:
 \itemize{
 \item n < 3: Too small, assuming non-normal
 \item 3 ≤ n ≤ 50: Shapiro-Wilk test
-\item n > 50: D'Agostino skewness test
+\item 50 < n<= 1000: D'Agostino Chi2 test, instead of Kolmogorov-Smirnov test
+\item n > 1000: Show p-values, plots QQ plots and prompts for decision
+references: 1.https://www.graphpad.com/guides/prism/latest/statistics/stat_choosing_a_normality_test.htm
+2.D’Agostino, R.B. (1971) An Omnibus Test of Normality for Moderate and Large Size Samples. Biometrika, 58, 341-348.
 }
 }
 
 \examples{
-\dontrun{
-# Automatic mode
 normal_test(iris, "Sepal.Length", "Species", norm = "auto")
+normal_test(iris, "Sepal.Length", "Species", norm = TRUE)
 
-# Interactive mode
-normal_test(mtcars, "mpg", "cyl", norm = "ask")
-}
 }

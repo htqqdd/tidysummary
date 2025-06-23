@@ -2,7 +2,7 @@
 #'
 #' Calculates and appends p-values with optional statistical details to a summary table based on variable types and group comparisons. Handles both continuous and categorical variables with appropriate statistical tests.
 #'
-#' @param datalist An object of class 'add_var' containing summary.
+#' @param summary A data frame that has been processed by `add_summary()`.
 #' @param digit A numeric determine decimal. Accepts:
 #'   - `3`:convert to 3 decimal, default
 #'   - `4`:convert to 4 decimal
@@ -22,12 +22,11 @@
 #'         - Optional statistic names/values
 #'
 #' @export
-add_p <- function(datalist, digit = 3, asterisk = F,
+add_p <- function(summary, digit = 3, asterisk = F,
                   add_method = F, add_statistic_name = F, add_statistic_value = F){
-
-  #检查datalist参数
-  if (!inherits(datalist, "add_var") || is.null(datalist$summary)) {
-    cli_alert_danger("'datalist' must be a add_var object containing summary")
+  #检查add_var属性
+  if (!"add_summary" %in% names(attributes(summary))) {
+    cli_alert_danger("must use add_summary() for 'summary' before using add_p()")
     stop()
   }
 
@@ -61,7 +60,10 @@ add_p <- function(datalist, digit = 3, asterisk = F,
     stop()
   }
 
-  data = datalist$data
+  #获取add_var属性,注意此时输入的dataframe为summary
+  datalist = attr(summary, "add_var", exact = TRUE)
+  data = attr(summary, "add_summary", exact = TRUE)[["input_data"]]
+
   group = datalist$group
   valid_var = datalist$var$valid
   group_nlevels = datalist$group_nlevels
@@ -130,8 +132,8 @@ add_p <- function(datalist, digit = 3, asterisk = F,
         method[[v]] = "Fisher's exact test"
         p_result <- suppressWarnings(fisher.test(data[[v]], data[[group]]))
         p[[v]] <- format_p(p_result$p.value, digit, asterisk)
-        statistic_name[[v]] <- "-"
-        statistic_value[[v]] <- "-"
+        statistic_name[[v]] <- "\u2014"
+        statistic_value[[v]] <- "\u2014"
       }
     } else {
       # 两组比较
@@ -145,6 +147,7 @@ add_p <- function(datalist, digit = 3, asterisk = F,
       if (v %in% norm_unequal_var) {
         method[[v]] <- "Welch's t-test"
         p_result <- t.test(data[[v]] ~ data[[group]], var.equal = FALSE)
+        is.numeric(NaN)
         p[[v]] <- format_p(p_result$p.value, digit, asterisk)
         statistic_name[[v]] <- names(p_result$statistic)
         statistic_value[[v]] <- my_round(p_result$statistic, digit)
@@ -181,8 +184,8 @@ add_p <- function(datalist, digit = 3, asterisk = F,
         method[[v]] = "Fisher's exact test"
         p_result <- suppressWarnings(fisher.test(data[[v]], data[[group]]))
         p[[v]] <- format_p(p_result$p.value, digit, asterisk)
-        statistic_name[[v]] <- "-"
-        statistic_value[[v]] <- "-"
+        statistic_name[[v]] <- "\u2014"
+        statistic_value[[v]] <- "\u2014"
       }
     }
   }
@@ -204,8 +207,8 @@ add_p <- function(datalist, digit = 3, asterisk = F,
     p_result$statistic_value <- unlist(statistic_value)
   }
 
-  summary_with_p <- left_join(datalist$summary, p_result, by = "variable")
-  rownames(summary_with_p) <- rownames(datalist$summary)
+  summary_with_p <- left_join(summary, p_result, by = "variable")
+  rownames(summary_with_p) <- rownames(summary)
   if (!is.logical(add_method) && add_method == "code") {
     unique_methods <- unique(unlist(method))
     method_labels <- setNames(unique_methods, seq_along(unique_methods))

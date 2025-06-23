@@ -27,6 +27,7 @@
 #' @importFrom dplyr slice_tail
 #' @importFrom dplyr bind_rows
 #' @importFrom dplyr bind_cols
+#' @importFrom dplyr n
 #' @importFrom tibble deframe
 #' @importFrom tibble column_to_rownames
 #' @importFrom tibble rownames_to_column
@@ -45,13 +46,10 @@
 #' @importFrom cli cli_progress_step
 #' @importFrom cli cli_progress_update
 #'
-#' @importFrom ggplot2 ggplot
-#' @importFrom ggplot2 aes
-#' @importFrom ggplot2 geom_qq
-#' @importFrom ggplot2 geom_qq_line
-#' @importFrom ggplot2 ggtitle
-#' @importFrom ggplot2 theme_bw
-#' @importFrom ggplot2 facet_wrap
+#' @importFrom tidyplots tidyplot
+#' @importFrom qqplotr stat_qq_band
+#' @importFrom qqplotr stat_qq_line
+#' @importFrom qqplotr stat_qq_point
 #'
 #' @importFrom stringr str_extract_all
 NULL

@@ -47,7 +47,7 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">add_var</span><span class="op">(</span><span class="va">data</span>, var <span class="op">=</span> <span class="cn">NULL</span>, group <span class="op">=</span> <span class="st">"group"</span>, norm <span class="op">=</span> <span class="st">"auto"</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">add_var</span><span class="op">(</span><span class="va">data</span>, var <span class="op">=</span> <span class="cn">NULL</span>, group <span class="op">=</span> <span class="st">"group"</span>, norm <span class="op">=</span> <span class="st">"auto"</span>, center <span class="op">=</span> <span class="st">"median"</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -65,19 +65,22 @@
 
 
 <dt>norm</dt>
-<dd><p>Control parameter for normality tests. Accepts:</p><ul><li><p><code>'auto'</code>:Automatically decide normality based on p-values, default</p></li>
-<li><p><code>'ask'</code>:Plots QQ plots and prompts for decision, if any p-value &lt; 0.05</p></li>
-<li><p><code>TRUE</code>/<code>'true'</code>: always assuming data are normally distributed</p></li>
-<li><p><code>FALSE</code>/<code>'false'</code>: always assuming data are non-normally distributed</p></li>
+<dd><p>Control parameter for normality tests. Accepts:</p><ul><li><p><code>'auto'</code>: Automatically decide based on p-values, but the same as <code>'ask'</code> when n &gt; 1000, default</p></li>
+<li><p><code>'ask'</code>: Show p-values, plots QQ plots and prompts for decision</p></li>
+<li><p><code>TRUE</code>/<code>'true'</code>: Always assuming data are normally distributed</p></li>
+<li><p><code>FALSE</code>/<code>'false'</code>: Always assuming data are non-normally distributed</p></li>
 </ul></dd>
+
+
+<dt>center</dt>
+<dd><p>A character string specifying the center to use in Levene's test for equality of variances. Default is <code>"median"</code>, which is more robust than the mean.</p></dd>
 
 </dl></div>
     <div id="value">
     <h2>Value</h2>
     
 
-<p>A list containing:</p><ul><li><p><code>data</code>: Modified dataset</p></li>
-<li><p><code>var</code>: List of categorized variables:</p><ul><li><p><code>valid</code>: All valid variable names after checks</p></li>
+<p>A modified data frame with an attribute <code>'add_var'</code> containing a list of categorized variables and their properties:</p><ul><li><p><code>var</code>: List of categorized variables:</p><ul><li><p><code>valid</code>: All valid variable names after checks</p></li>
 <li><p><code>continuous</code>: Sublist of continuous variables (further divided by normality/equal variance)</p></li>
 <li><p><code>categorical</code>: Sublist of categorical variables (further divided by ordered/expected frequency)</p></li>
 </ul></li>

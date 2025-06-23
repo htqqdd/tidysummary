@@ -39,9 +39,9 @@ The function can automatically checks normality using statistical tests. You can
 
 ### norm
 
--   `auto`: By default, automatically checks normality.
+-   `auto`: By default, automatically checks normality, but the same as `ask` when n \> 1000.
 
--   `ask`: If any p-value \< 0.05, displays QQ plots and prompts for manual confirmation.
+-   `ask`: Displays automatic result, QQ plots and prompts for manual confirmation.
 
 -   `true`: Treats all variables as normal.
 
@@ -101,7 +101,7 @@ Format string for categorical variables. Default is `"{n} ({pct})"`. Accepted pl
 
 -   `all`: show all levels.
 
-``` R
+``` r
 summary <- datalist %>%
   add_summary(add_overall = T,
               continuous_format = "{mean} ± {SD}",
@@ -119,7 +119,7 @@ A summary_with_p dataframe with rows as the variables and columns as the group.
 
 Just input the result from add_summary()
 
-``` R
+``` r
 summary_with_p <- summary %>%
   add_p()
 ```
@@ -152,7 +152,7 @@ If you want to custom the summary_with_p column, You can choose:
 
 -   `FALSE`: By default, not show statistic value.
 
-``` R
+``` r
 summary_with_p <- summary %>%
   add_p(asterisk = T, add_method = "code")
 ```

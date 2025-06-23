@@ -8,7 +8,8 @@
 #' @return A character vector of formatted values.
 #'
 #' @examples
-#' my_round(3.1415, 2)  # returns "3.14"
+#' my_round(3.1415, 2)
+#' my_round(3, 2)
 #' @export
 my_round <- function(x, digit = 0) {
   if (!is.numeric(digit) || length(digit) != 1 || digit < 0 || digit != floor(digit)) {
@@ -32,12 +33,17 @@ my_round <- function(x, digit = 0) {
 #' @return Character of formatted p-value or asterisks.
 #'
 #' @examples
-#' format_p(0.00009, 4)    # returns "<0.0001"
-#' format_p(0.03, 3)  # returns "0.030"
-#' format_p(0.02, asterisk = TRUE)  # returns "*"
+#' format_p(0.00009, 4)
+#' format_p(0.03, 3)
+#' format_p(0.02, asterisk = TRUE)
 #'
 #' @export
 format_p <- function(p, digit = 3, asterisk = FALSE){
+
+  if (is.na(p)){
+    return("\u2014")
+  }
+
   if (!is.numeric(p) || any(p < 0 | p > 1)) {
     cli_alert_danger("'p' must be a numeric vector with values between 0 and 1")
     stop()

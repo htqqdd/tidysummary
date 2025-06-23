@@ -8,8 +8,8 @@
 #'
 #' @return A character string with one of three values:
 #'   - `"not_small"`: Sample size >=40 and all expected frequencies >=5
-#'   - `"small"`: Sample size >=40, all expected frequencies >=1 and at least one <5
-#'   - `"very_small"`: Sample size <40 OR any expected frequency <1
+#'   - `"small"`: Sample size >=40, all expected frequencies >=1 and at least one <5, only for 2*2 contingency tables
+#'   - `"very_small"`: Other conditions, including sample size <40 or any expected frequency <1
 #'
 #' @examples
 #' \dontrun{
@@ -41,7 +41,7 @@ small_test <- function(data, var, group){
 
   #检查var参数
   if (!is.character(var) || length(var) != 1 || !var %in% names(data) || var == group) {
-    cli_alert_danger("'var' must be a character within 'data' colnames and different to 'group'")
+    cli_alert_danger(paste0(var, ": must be a character within 'data' colnames and different to 'group'"))
     stop()
   }
   if (!is.factor(data[[var]])){
@@ -60,14 +60,10 @@ small_test <- function(data, var, group){
     return(matrix(0, nrow=nrow(tbl), ncol=ncol(tbl)))  # 错误时返回零矩阵
   })
 
-  if (sum(tbl) >= 40) {
-    if (all(expected >= 5)) {
-      return("not_small")
-    } else if (any(expected < 5) & all(expected >= 1)) {
-      return("small")
-    } else {
-      return("very_small")
-    }
+  if (sum(tbl) >= 40 && all(expected >= 5)) {
+    return("not_small")
+  } else if (sum(tbl) >= 40 && all(expected >= 1) && any(expected < 5) && nrow(tbl) == 2 && ncol(tbl) == 2) {
+    return("small")
   } else {
     return("very_small")
   }

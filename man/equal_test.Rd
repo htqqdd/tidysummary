@@ -4,7 +4,7 @@
 \alias{equal_test}
 \title{Test for Equality of Variances}
 \usage{
-equal_test(data, var, group)
+equal_test(data, var, group, center = "median")
 }
 \arguments{
 \item{data}{A data frame containing the variables to be tested.}
@@ -12,6 +12,8 @@ equal_test(data, var, group)
 \item{var}{A character string specifying the numeric variable in \code{data} to test.}
 
 \item{group}{A character string specifying the grouping variable in \code{data}.}
+
+\item{center}{A character string specifying the center to use in Levene's test. Default is \code{"median"}, which is more robust than the mean.}
 }
 \value{
 Logical value:
@@ -23,8 +25,12 @@ Logical value:
 \description{
 Performs Levene's test to assess equality of variances between groups.
 }
+\section{Methodology for Equality of Variances}{
+
+Levene's test is the default method adopted in SPSS, the original Levene's test select center = mean, but here select center = median for a more robust test
+}
+
 \examples{
-\dontrun{
-  equal_test(mtcars, "mpg", "cyl")
-  }
+equal_test(iris, "Sepal.Length", "Species")
+
 }

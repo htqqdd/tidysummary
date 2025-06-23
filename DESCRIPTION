@@ -15,13 +15,13 @@ Imports:
     cli,
     dplyr,
     fBasics,
-    ggplot2,
     glue,
-    nortest,
+    qqplotr,
     rlang,
     stats,
     stringr,
     tibble,
+    tidyplots,
     tidyr
 Suggests: 
     knitr,

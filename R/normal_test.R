@@ -6,29 +6,28 @@
 #' @param var A character string specifying the numeric variable in `data` to test.
 #' @param group A character string specifying the grouping variable in `data`. If `NULL`, treated as one group.
 #' @param norm Control parameter for test behavior. Accepts:
-#'   - `'auto'`:Automatically decide based on p-values, default
-#'   - `'ask'`:Plots QQ plots and prompts for decision, if any p-value < 0.05
-#'   - `TRUE`/`'true'`: always returns `TRUE`
-#'   - `FALSE`/`'false'`: always returns `FALSE`
+#'   - `'auto'`: Automatically decide based on p-values, but the same as `'ask'` when n > 1000, default
+#'   - `'ask'`: Show p-values, plots QQ plots and prompts for decision
+#'   - `TRUE`/`'true'`: Always returns `TRUE`
+#'   - `FALSE`/`'false'`: Always returns `FALSE`
 #'
 #' @return A logical value:
 #'   - `TRUE`: data are normally distributed
 #'   - `FALSE`: data are not normally distributed
 #'
-#' @section Testing Methodology:
+#' @section Methodology for p-values:
 #'   Automatically selects test based on sample size per group:
 #'   - n < 3: Too small, assuming non-normal
 #'   - 3 ≤ n ≤ 50: Shapiro-Wilk test
-#'   - n > 50: D'Agostino skewness test
+#'   - 50 < n<= 1000: D'Agostino Chi2 test, instead of Kolmogorov-Smirnov test
+#'   - n > 1000: Show p-values, plots QQ plots and prompts for decision
+#'   references: 1.https://www.graphpad.com/guides/prism/latest/statistics/stat_choosing_a_normality_test.htm
+#'   2.D’Agostino, R.B. (1971) An Omnibus Test of Normality for Moderate and Large Size Samples. Biometrika, 58, 341-348.
 #'
 #' @examples
-#' \dontrun{
-#' # Automatic mode
 #' normal_test(iris, "Sepal.Length", "Species", norm = "auto")
+#' normal_test(iris, "Sepal.Length", "Species", norm = TRUE)
 #'
-#' # Interactive mode
-#' normal_test(mtcars, "mpg", "cyl", norm = "ask")
-#' }
 #' @export
 normal_test <- function(data = NULL, var = NULL, group = NULL, norm = "auto"){
   . <- value <- NULL #避免R CMD check警告
@@ -51,11 +50,11 @@ normal_test <- function(data = NULL, var = NULL, group = NULL, norm = "auto"){
 
   #检查var参数
   if (!is.character(var) || length(var) != 1 || !var %in% names(data) || var == group_var) {
-    cli_alert_danger("'var' must be a character within 'data' colnames and different to 'group'")
+    cli_alert_danger(paste0(var, ": must be a character within 'data' colnames and different to 'group'"))
     stop()
   }
   if (!is.numeric(data[[var]])){
-    cli_alert_danger("'var' data must be numeric.")
+    cli_alert_danger(paste0(var,": must be numeric"))
     stop()
   }
 
@@ -79,40 +78,47 @@ normal_test <- function(data = NULL, var = NULL, group = NULL, norm = "auto"){
     group_by(!!sym(group_var)) %>%
     summarise(
       p.value = {
-        n = n()
-        if (n < 3) NA
-        else if (n <= 50) tryCatch(stats::shapiro.test(.data[[var]])$p.value, error = function(e) NA)
-        else if (n <= 46340) tryCatch(fBasics::dagoTest(.data[[var]])@test$p.value[1], error = function(e) NA)
-        else tryCatch(nortest::ad.test(.data[[var]])$p.value, error = function(e) NA)
-      },
-      .groups = "drop"
-    ) %>%
+        n_val = n()
+        case_when(
+          n_val < 3 ~ NA,
+          n_val <= 50 ~ tryCatch(stats::shapiro.test(.data[[var]])$p.value, error = function(e) NA),
+          n_val <= 1000 ~ tryCatch(fBasics::dagoTest(.data[[var]])@test$p.value[1], error = function(e) NA),
+          TRUE ~ 2)},
+      .groups = "drop") %>%
     deframe()
 
   if (any(is.na(result))){
-    cli_alert_warning("Error in normality test, assuming non-normal")
+    cli_alert_warning(paste0(var, ": error in normality test, assuming non-normal"))
     return(F)
   }
 
   if (is.character(norm) && tolower(norm) == "auto"){
-    return(all(result >= 0.05))
+    if (any(result == 2)) { #样本量>1000, 不推荐使用统计检验
+      norm = "ask"
+    } else {
+      return(all(result >= 0.05))
+    }
   }
 
-  if (is.character(norm) && tolower(norm) == "ask"){
-    if (any(result < 0.05)){
-      temp_data <- data[, c(var, group_var)]
-      colnames(temp_data) <- c("value", "group")
-      p <- ggplot(temp_data, aes(sample = value, color = group)) +
-        geom_qq() +
-        geom_qq_line() +
-        facet_wrap(~group) +
-        ggtitle(var) +
-        theme_bw()
-      print(p)
-      cli_alert_info(paste("Is", var , "normal? (Y/n): "))
-      input <- readline()
-      return(input != "n")
-    } else return(T)
 
+  if (is.character(norm) && tolower(norm) == "ask"){
+    temp_data <- data[, c(var, group_var)]
+    colnames(temp_data) <- c("value", "group")
+    temp_data$group <- as.factor(temp_data$group)
+    tidyplot(temp_data, sample = value, color = group) |>
+      tidyplots::add(stat_qq_band(alpha = 0.1)) |>
+      tidyplots::add(stat_qq_line()) |>
+      tidyplots::add(stat_qq_point()) |>
+      tidyplots::adjust_size(width = NA, height = NA) |>
+      print()
+    cli_alert_info(ifelse(all(result >= 0.05),
+                          paste0(var, ": automatic test normally distributed, please check QQ plot"),
+                          paste0(var, ": automatic test not normally distributed, please check QQ plot")))
+    cli_alert_info("Is it normal (Y/n): ")
+    input <- readline()
+    cli_alert_info(ifelse(input != "n",
+                          paste(var, ": is regarded as normally distributed"),
+                          paste(var, ":is regarded as not normally distributed")))
+    return(input != "n")
   }
 }

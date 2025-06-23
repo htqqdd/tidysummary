@@ -24,8 +24,8 @@ Character of formatted p-value or asterisks.
 Formats p-values as strings with specified precision and optional significance asterisks.
 }
 \examples{
-format_p(0.00009, 4)    # returns "<0.0001"
-format_p(0.03, 3)  # returns "0.030"
-format_p(0.02, asterisk = TRUE)  # returns "*"
+format_p(0.00009, 4)
+format_p(0.03, 3)
+format_p(0.02, asterisk = TRUE)
 
 }

@@ -31,7 +31,10 @@
     <loc>/reference/add_var.html</loc>
   </url>
   <url>
-    <loc>/reference/create_summary.html</loc>
+    <loc>/reference/convert2.html</loc>
+  </url>
+  <url>
+    <loc>/reference/convert2factor.html</loc>
   </url>
   <url>
     <loc>/reference/equal_test.html</loc>

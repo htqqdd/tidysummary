@@ -5,7 +5,7 @@
 \title{Add statistical test results to summary data}
 \usage{
 add_p(
-  datalist,
+  summary,
   digit = 3,
   asterisk = F,
   add_method = F,
@@ -14,7 +14,7 @@ add_p(
 )
 }
 \arguments{
-\item{datalist}{An object of class 'add_var' containing summary.}
+\item{summary}{A data frame that has been processed by \code{add_summary()}.}
 
 \item{digit}{A numeric determine decimal. Accepts:
 \itemize{

@@ -18,5 +18,6 @@ A character vector of formatted values.
 Converts numeric values to character strings with fixed decimal formatting using \code{sprintf()}.
 }
 \examples{
-my_round(3.1415, 2)  # returns "3.14"
+my_round(3.1415, 2)
+my_round(3, 2)
 }
