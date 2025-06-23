@@ -45,6 +45,7 @@
 #' @importFrom cli cli_alert_info
 #' @importFrom cli cli_progress_step
 #' @importFrom cli cli_progress_update
+#' @importFrom cli cli_alert_success
 #'
 #' @importFrom tidyplots tidyplot
 #' @importFrom qqplotr stat_qq_band

@@ -112,13 +112,12 @@ normal_test <- function(data = NULL, var = NULL, group = NULL, norm = "auto"){
       tidyplots::adjust_size(width = NA, height = NA) |>
       print()
     cli_alert_info(ifelse(all(result >= 0.05),
-                          paste0(var, ": automatic test normally distributed, please check QQ plot"),
-                          paste0(var, ": automatic test not normally distributed, please check QQ plot")))
-    cli_alert_info("Is it normal (Y/n): ")
+                          paste0(var, ": automatic test normally distributed, please check QQ plot, is it normal (Y/n): "),
+                          paste0(var, ": automatic test not normally distributed, please check QQ plot, is it normal (Y/n): ")))
     input <- readline()
-    cli_alert_info(ifelse(input != "n",
-                          paste(var, ": is regarded as normally distributed"),
-                          paste(var, ":is regarded as not normally distributed")))
+    cli_alert_success(ifelse(input != "n",
+                          paste0(var, ": is regarded as normally distributed"),
+                          paste0(var, ": is regarded as not normally distributed")))
     return(input != "n")
   }
 }

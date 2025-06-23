@@ -193,7 +193,7 @@ add_p <- function(summary, digit = 3, asterisk = F,
   # 创建结果数据框
   p_result <- data.frame(
     variable = valid_var,
-    p_value = unlist(p))
+    p = unlist(p))
   if ((is.logical(add_method) && add_method) || (is.character(add_method) && tolower(add_method) == "true")) {
     p_result$method <- unlist(method)
   }

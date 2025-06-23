@@ -99,7 +99,6 @@ add_var <- function(data, var = NULL, group = "group", norm = "auto", center = "
   }
 
   #连续性变量
-  cli_progress_step("Checking continuous variables")
   continuous_var <- valid_var[sapply(valid_var, function(x) is.numeric(data[[x]]))]
   if (length(continuous_var) > 0) {
     norm_var <- continuous_var[sapply(continuous_var, function(x) normal_test(data, x, group, norm))]
@@ -116,7 +115,6 @@ add_var <- function(data, var = NULL, group = "group", norm = "auto", center = "
 
 
   #分类变量
-  cli_progress_step("Checking categorical variables")
   categorical_var <- valid_var[sapply(valid_var, function(x) is.factor(data[[x]]))]
   if (length(categorical_var) > 0) {
     rank_var <- categorical_var[sapply(categorical_var, function(x) is.ordered(data[[x]]))]

@@ -90,7 +90,7 @@ expected frequency.</p></li>
 <p>Specify the variables to summarize in <code>var</code> and the
 grouping variable in <code>group</code>.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">datalist</span> <span class="op">&lt;-</span> <span class="va">iris</span> <span class="op">%&gt;%</span></span>
+<code class="sourceCode R"><span><span class="va">datalist</span> <span class="op">&lt;-</span> <span class="va">iris</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="../reference/add_var.html">add_var</a></span><span class="op">(</span>var <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Sepal.Length"</span>, <span class="st">"Sepal.Width"</span><span class="op">)</span>, group <span class="op">=</span> <span class="st">"Species"</span><span class="op">)</span></span></code></pre></div>
 <p>The function can automatically checks normality using statistical
 tests. You can choose:</p>
@@ -106,7 +106,7 @@ for manual confirmation.</p></li>
 <li><p><code>false</code>: Treats all variables as non-normal.</p></li>
 </ul>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">datalist</span> <span class="op">&lt;-</span> <span class="va">iris</span> <span class="op">%&gt;%</span></span>
+<code class="sourceCode R"><span><span class="va">datalist</span> <span class="op">&lt;-</span> <span class="va">iris</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="../reference/add_var.html">add_var</a></span><span class="op">(</span>var <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Sepal.Length"</span>, <span class="st">"Sepal.Width"</span><span class="op">)</span>, group <span class="op">=</span> <span class="st">"Species"</span>, norm <span class="op">=</span> <span class="st">"ask"</span><span class="op">)</span></span></code></pre></div>
 </div>
 </div>
@@ -123,7 +123,7 @@ group.</p>
 </h4>
 <p>Just input the result from add_var()</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">summary</span> <span class="op">&lt;-</span> <span class="va">datalist</span> <span class="op">%&gt;%</span></span>
+<code class="sourceCode R"><span><span class="va">summary</span> <span class="op">&lt;-</span> <span class="va">datalist</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="../reference/add_summary.html">add_summary</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p>If you want to custom the summary style, You can choose:</p>
 </div>
@@ -172,7 +172,7 @@ and <a href="https://itsleeds.github.io/pct/" class="external-link">pct</a>.</p>
 <li><p><code>all</code>: show all levels.</p></li>
 </ul>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">summary</span> <span class="op">&lt;-</span> <span class="va">datalist</span> <span class="op">%&gt;%</span></span>
+<code class="sourceCode R"><span><span class="va">summary</span> <span class="op">&lt;-</span> <span class="va">datalist</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="../reference/add_summary.html">add_summary</a></span><span class="op">(</span>add_overall <span class="op">=</span> <span class="cn">T</span>,</span>
 <span>              continuous_format <span class="op">=</span> <span class="st">"{mean} ± {SD}"</span>,</span>
 <span>              categorical_format <span class="op">=</span> <span class="st">"{n} ({pct})"</span>,</span>
@@ -191,7 +191,7 @@ the group.</p>
 </h4>
 <p>Just input the result from add_summary()</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">summary_with_p</span> <span class="op">&lt;-</span> <span class="va">summary</span> <span class="op">%&gt;%</span></span>
+<code class="sourceCode R"><span><span class="va">summary_with_p</span> <span class="op">&lt;-</span> <span class="va">summary</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="../reference/add_p.html">add_p</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p>If you want to custom the summary_with_p column, You can choose:</p>
 </div>
@@ -230,7 +230,7 @@ appearance.</p></li>
 value.</p></li>
 </ul>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">summary_with_p</span> <span class="op">&lt;-</span> <span class="va">summary</span> <span class="op">%&gt;%</span></span>
+<code class="sourceCode R"><span><span class="va">summary_with_p</span> <span class="op">&lt;-</span> <span class="va">summary</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="../reference/add_p.html">add_p</a></span><span class="op">(</span>asterisk <span class="op">=</span> <span class="cn">T</span>, add_method <span class="op">=</span> <span class="st">"code"</span><span class="op">)</span></span></code></pre></div>
 </div>
 </div>
