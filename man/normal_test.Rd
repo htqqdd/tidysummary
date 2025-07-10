@@ -39,7 +39,6 @@ Automatically selects test based on sample size per group:
 \item (3, 50] Shapiro-Wilk test
 \item (50, 1000]: D'Agostino Chi2 test, instead of Kolmogorov-Smirnov test
 \item n > 1000: Show p-values, plots QQ plots and prompts for decision
-For method details see Motulsky H J (2016) \url{http://www.graphpad.com/guides/prism/10/statistics/index.htm} and d'Agostino R B (1971) \url{doi:10.1093/biomet/58.2.341}.
 }
 }
 

@@ -21,7 +21,6 @@
 #'   - (3, 50] Shapiro-Wilk test
 #'   - (50, 1000]: D'Agostino Chi2 test, instead of Kolmogorov-Smirnov test
 #'   - n > 1000: Show p-values, plots QQ plots and prompts for decision
-#'   For method details see Motulsky H J (2016) <http://www.graphpad.com/guides/prism/10/statistics/index.htm> and d'Agostino R B (1971) <doi:10.1093/biomet/58.2.341>.
 #'
 #' @examples
 #' normal_test(iris, "Sepal.Length", "Species", norm = "auto")
