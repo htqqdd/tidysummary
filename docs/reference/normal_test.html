@@ -84,11 +84,10 @@
     
 
 <p>Automatically selects test based on sample size per group:</p><ul><li><p>n &lt; 3: Too small, assuming non-normal</p></li>
-<li><p>3 ≤ n ≤ 50: Shapiro-Wilk test</p></li>
-<li><p>50 &lt; n&lt;= 1000: D'Agostino Chi2 test, instead of Kolmogorov-Smirnov test</p></li>
+<li><p>(3, 50] Shapiro-Wilk test</p></li>
+<li><p>(50, 1000]: D'Agostino Chi2 test, instead of Kolmogorov-Smirnov test</p></li>
 <li><p>n &gt; 1000: Show p-values, plots QQ plots and prompts for decision
-references: 1.https://www.graphpad.com/guides/prism/latest/statistics/stat_choosing_a_normality_test.htm
-2.D’Agostino, R.B. (1971) An Omnibus Test of Normality for Moderate and Large Size Samples. Biometrika, 58, 341-348.</p></li>
+For method details see Motulsky H J (2016) <a href="http://www.graphpad.com/guides/prism/10/statistics/index.htm" class="external-link">http://www.graphpad.com/guides/prism/10/statistics/index.htm</a> and d'Agostino R B (1971) <a href="doi:10.1093/biomet/58.2.341">doi:10.1093/biomet/58.2.341</a>.</p></li>
 </ul></div>
 
     <div id="ref-examples">

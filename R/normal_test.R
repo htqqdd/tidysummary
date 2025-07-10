@@ -18,11 +18,10 @@
 #' @section Methodology for p-values:
 #'   Automatically selects test based on sample size per group:
 #'   - n < 3: Too small, assuming non-normal
-#'   - 3 ≤ n ≤ 50: Shapiro-Wilk test
-#'   - 50 < n<= 1000: D'Agostino Chi2 test, instead of Kolmogorov-Smirnov test
+#'   - (3, 50] Shapiro-Wilk test
+#'   - (50, 1000]: D'Agostino Chi2 test, instead of Kolmogorov-Smirnov test
 #'   - n > 1000: Show p-values, plots QQ plots and prompts for decision
-#'   references: 1.https://www.graphpad.com/guides/prism/latest/statistics/stat_choosing_a_normality_test.htm
-#'   2.D’Agostino, R.B. (1971) An Omnibus Test of Normality for Moderate and Large Size Samples. Biometrika, 58, 341-348.
+#'   For method details see Motulsky H J (2016) <http://www.graphpad.com/guides/prism/10/statistics/index.htm> and d'Agostino R B (1971) <doi:10.1093/biomet/58.2.341>.
 #'
 #' @examples
 #' normal_test(iris, "Sepal.Length", "Species", norm = "auto")
@@ -66,11 +65,11 @@ normal_test <- function(data = NULL, var = NULL, group = NULL, norm = "auto"){
 
 
   if ((is.logical(norm) && norm) || (is.character(norm) && tolower(norm) == "true")){
-    return(T)
+    return(TRUE)
   }
 
   if ((is.logical(norm) && !norm) || (is.character(norm) && tolower(norm) == "false")){
-    return(F)
+    return(FALSE)
   }
 
   result <- data %>%
@@ -89,7 +88,7 @@ normal_test <- function(data = NULL, var = NULL, group = NULL, norm = "auto"){
 
   if (any(is.na(result))){
     cli_alert_warning(paste0(var, ": error in normality test, assuming non-normal"))
-    return(F)
+    return(FALSE)
   }
 
   if (is.character(norm) && tolower(norm) == "auto"){

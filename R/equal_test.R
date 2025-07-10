@@ -5,10 +5,10 @@
 #' @param data A data frame containing the variables to be tested.
 #' @param var A character string specifying the numeric variable in `data` to test.
 #' @param group A character string specifying the grouping variable in `data`.
-#' @param center A character string specifying the center to use in Levene's test. Default is `"median"`, which is more robust than the mean.
+#' @param center A character string specifying the `center` to use in Levene's test. Default is `'median'`, which is more robust than the mean.
 #'
 #' @return Logical value:
-#'   - `TRUE`: Variances are equal, p-value ≥ 0.05
+#'   - `TRUE`: Variances are equal, p-value more than 0.05
 #'   - `FALSE`: Variances are unequal or an error occurred during testing
 #'
 #' @section Methodology for Equality of Variances:

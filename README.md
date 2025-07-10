@@ -4,7 +4,7 @@
 
 <!-- badges: end -->
 
-The goal of tidysummary is to streamlines the analysis of clinical data by automatically selecting appropriate statistical descriptions and inference methods based on variable types. See [the vignette](https://htqqdd.github.io/tidysummary/) for more details.
+The goal of tidysummary is to streamlines the analysis of clinical data by automatically selecting appropriate statistical descriptions and inference methods based on variable types. See [the vignette](https://htqqdd.github.io/tidysummary/articles/tidysummary.html) for more details.
 
 ## Installation
 
@@ -62,9 +62,7 @@ result %>%
   kbl(caption = "Table 1. Summary of Iris Dataset",
       row.names = F,
       align = "c") %>%
-  kable_classic(
-    full_width = FALSE,
-    html_font = "Cambria")
+  kable_classic(full_width = FALSE, html_font = "Cambria")
 ```
 
 ![](man/figures/example.png)

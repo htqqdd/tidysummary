@@ -36,11 +36,10 @@ Conducts normality tests for a specified variable, optionally by group. Supports
 Automatically selects test based on sample size per group:
 \itemize{
 \item n < 3: Too small, assuming non-normal
-\item 3 ≤ n ≤ 50: Shapiro-Wilk test
-\item 50 < n<= 1000: D'Agostino Chi2 test, instead of Kolmogorov-Smirnov test
+\item (3, 50] Shapiro-Wilk test
+\item (50, 1000]: D'Agostino Chi2 test, instead of Kolmogorov-Smirnov test
 \item n > 1000: Show p-values, plots QQ plots and prompts for decision
-references: 1.https://www.graphpad.com/guides/prism/latest/statistics/stat_choosing_a_normality_test.htm
-2.D’Agostino, R.B. (1971) An Omnibus Test of Normality for Moderate and Large Size Samples. Biometrika, 58, 341-348.
+For method details see Motulsky H J (2016) \url{http://www.graphpad.com/guides/prism/10/statistics/index.htm} and d'Agostino R B (1971) \url{doi:10.1093/biomet/58.2.341}.
 }
 }
 

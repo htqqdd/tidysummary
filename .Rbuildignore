@@ -1,3 +1,5 @@
 ^tidysummary\.Rproj$
 ^\.Rproj\.user$
 ^LICENSE\.md$
+^CRAN-SUBMISSION$
+^cran-comments\.md$

@@ -1,6 +1,6 @@
 #' Prepare variables for add_summary
 #'
-#' This function processes a dataset for statistical analysis by categorizing variables into continuous and categorical types, performing validity checks, and applying necessary conversions. It automatically handles normality checks, equality of variances checks, and expected frequency assumptions checks.
+#' This function processes a dataset for statistical analysis by categorizing variables into continuous and categorical types. It automatically handles normality checks, equality of variances checks, and expected frequency assumptions checks.
 #'
 #' @param data A data frame containing the variables to analyze, with variables at columns and observations at rows.
 #' @param var A character vector of variable names to include. If `NULL`, by default, all columns except the `group` column will be used.
@@ -10,7 +10,7 @@
 #'   - `'ask'`: Show p-values, plots QQ plots and prompts for decision
 #'   - `TRUE`/`'true'`: Always assuming data are normally distributed
 #'   - `FALSE`/`'false'`: Always assuming data are non-normally distributed
-#' @param center A character string specifying the center to use in Levene's test for equality of variances. Default is `"median"`, which is more robust than the mean.
+#' @param center A character string specifying the `center` to use in Levene's test for equality of variances. Default is `'median'`, which is more robust than the mean.
 #'
 #' @return A modified data frame with an attribute `'add_var'` containing a list of categorized variables and their properties:
 #' \itemize{
@@ -29,9 +29,8 @@
 #' }
 #'
 #' @examples
-#' \dontrun{
-#' datalist <- add_var(iris, var = c("Sepal.Length", "Species"), group = "Species")
-#' }
+#' data <- add_var(iris, var = c("Sepal.Length", "Species"), group = "Species")
+#'
 #' @export
 add_var <- function(data, var = NULL, group = "group", norm = "auto", center = "median"){
 

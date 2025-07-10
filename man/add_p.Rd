@@ -7,10 +7,10 @@
 add_p(
   summary,
   digit = 3,
-  asterisk = F,
-  add_method = F,
-  add_statistic_name = F,
-  add_statistic_value = F
+  asterisk = FALSE,
+  add_method = FALSE,
+  add_statistic_name = FALSE,
+  add_statistic_value = FALSE
 )
 }
 \arguments{
@@ -45,4 +45,13 @@ A data frame merged with statistical test results, containing:
 }
 \description{
 Calculates and appends p-values with optional statistical details to a summary table based on variable types and group comparisons. Handles both continuous and categorical variables with appropriate statistical tests.
+}
+\examples{
+# `summary` is a data frame processed by `add_var()` and `add_summary()`:
+data <- add_var(iris, var = c("Sepal.Length", "Species"), group = "Species")
+summary <- add_summary(data)
+
+# Add statistical test results
+result <- add_p(summary)
+
 }

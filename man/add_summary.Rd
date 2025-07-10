@@ -49,9 +49,10 @@ A data frame containing summary statistics with the following columns:
 This function generates summary statistics for variables from a data frame that has been processed by \code{add_var()}, with options to format outputs.
 }
 \examples{
-\dontrun{
-# Assuming `my_data` is a processed by `add_var()`:
-result <- add_summary(my_data, add_overall = TRUE)
-result <- add_summary(my_data, continuous_format = "{mean}, ({SD})")
-}
+# `data` is a data frame processed by `add_var()`:
+data <- add_var(iris, var = c("Sepal.Length", "Species"), group = "Species")
+# Add summary statistics
+result <- add_summary(data, add_overall = TRUE)
+result <- add_summary(data, continuous_format = "{mean}, ({SD})")
+
 }

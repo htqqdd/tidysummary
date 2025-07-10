@@ -16,8 +16,8 @@ small_test(data, var, group)
 \value{
 A character string with one of three values:
 \itemize{
-\item \code{"not_small"}: Sample size >=40 and all expected frequencies >=5
-\item \code{"small"}: Sample size >=40, all expected frequencies >=1 and at least one <5, only for 2*2 contingency tables
+\item \code{"not_small"}: Sample size more than or euqal to 40 and all expected frequencies more than or euqal to 5
+\item \code{"small"}: Sample size more than or euqal to 40, all expected frequencies more than or euqal to 1 and at least one <5, only for 2*2 contingency tables
 \item \code{"very_small"}: Other conditions, including sample size <40 or any expected frequency <1
 }
 }
@@ -25,11 +25,10 @@ A character string with one of three values:
 This function determines if a contingency table meets the expected frequency assumptions for a valid chi-squared test. It categorizes the data into "not_small", "small", or "very_small" based on sample size and expected frequencies.
 }
 \examples{
-\dontrun{
 df <- data.frame(
   category = factor(c("A", "B", "A", "B")),
   group    = factor(c("X", "X", "Y", "Y"))
 )
 small_test(data = df, var = "category", group = "group")
-}
+
 }

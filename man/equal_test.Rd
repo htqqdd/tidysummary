@@ -13,12 +13,12 @@ equal_test(data, var, group, center = "median")
 
 \item{group}{A character string specifying the grouping variable in \code{data}.}
 
-\item{center}{A character string specifying the center to use in Levene's test. Default is \code{"median"}, which is more robust than the mean.}
+\item{center}{A character string specifying the \code{center} to use in Levene's test. Default is \code{'median'}, which is more robust than the mean.}
 }
 \value{
 Logical value:
 \itemize{
-\item \code{TRUE}: Variances are equal, p-value ≥ 0.05
+\item \code{TRUE}: Variances are equal, p-value more than 0.05
 \item \code{FALSE}: Variances are unequal or an error occurred during testing
 }
 }

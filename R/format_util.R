@@ -10,7 +10,8 @@
 #' @examples
 #' my_round(3.1415, 2)
 #' my_round(3, 2)
-#' @export
+#'
+#' @noRd
 my_round <- function(x, digit = 0) {
   if (!is.numeric(digit) || length(digit) != 1 || digit < 0 || digit != floor(digit)) {
     cli_alert_danger("'digit' must be a numeric value greater than or equal to 0")

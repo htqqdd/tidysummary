@@ -68,20 +68,20 @@
     <h2>Value</h2>
     
 
-<p>A character string with one of three values:</p><ul><li><p><code>"not_small"</code>: Sample size &gt;=40 and all expected frequencies &gt;=5</p></li>
-<li><p><code>"small"</code>: Sample size &gt;=40, all expected frequencies &gt;=1 and at least one &lt;5, only for 2*2 contingency tables</p></li>
+<p>A character string with one of three values:</p><ul><li><p><code>"not_small"</code>: Sample size more than or euqal to 40 and all expected frequencies more than or euqal to 5</p></li>
+<li><p><code>"small"</code>: Sample size more than or euqal to 40, all expected frequencies more than or euqal to 1 and at least one &lt;5, only for 2*2 contingency tables</p></li>
 <li><p><code>"very_small"</code>: Other conditions, including sample size &lt;40 or any expected frequency &lt;1</p></li>
 </ul></div>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span></span>
-<span class="r-in"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span></span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span></span></span>
 <span class="r-in"><span>  category <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"A"</span>, <span class="st">"B"</span>, <span class="st">"A"</span>, <span class="st">"B"</span><span class="op">)</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>  group    <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"X"</span>, <span class="st">"X"</span>, <span class="st">"Y"</span>, <span class="st">"Y"</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu">small_test</span><span class="op">(</span>data <span class="op">=</span> <span class="va">df</span>, var <span class="op">=</span> <span class="st">"category"</span>, group <span class="op">=</span> <span class="st">"group"</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="op">}</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "very_small"</span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </div>

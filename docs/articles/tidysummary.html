@@ -69,10 +69,21 @@
 
     
     
-<p>tidysummary: A Elegant Approach to Summarizing Clinical Data.</p>
+<p>tidysummary: An Elegant Approach to Summarizing Clinical Data.</p>
 <p>The goal of tidysummary is to streamlines the analysis of clinical
 data by automatically selecting appropriate statistical descriptions and
 inference methods based on variable types.</p>
+<div class="section level2">
+<h2 id="prepare-your-data">Prepare your data<a class="anchor" aria-label="anchor" href="#prepare-your-data"></a>
+</h2>
+<p>A data frame containing the variables to analyze, with variables at
+columns and observations at rows:</p>
+<ul>
+<li><p>Continuous variables: Numeric.</p></li>
+<li><p>Categorical variables: Factor (Ordinal Categorical variables:
+ordered Factor).</p></li>
+</ul>
+</div>
 <div class="section level2">
 <h2 id="add_var">add_var()<a class="anchor" aria-label="anchor" href="#add_var"></a>
 </h2>
@@ -90,7 +101,7 @@ expected frequency.</p></li>
 <p>Specify the variables to summarize in <code>var</code> and the
 grouping variable in <code>group</code>.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">datalist</span> <span class="op">&lt;-</span> <span class="va">iris</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<code class="sourceCode R"><span><span class="va">data</span> <span class="op">&lt;-</span> <span class="va">iris</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="../reference/add_var.html">add_var</a></span><span class="op">(</span>var <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Sepal.Length"</span>, <span class="st">"Sepal.Width"</span><span class="op">)</span>, group <span class="op">=</span> <span class="st">"Species"</span><span class="op">)</span></span></code></pre></div>
 <p>The function can automatically checks normality using statistical
 tests. You can choose:</p>
@@ -98,15 +109,15 @@ tests. You can choose:</p>
 <h4 id="norm">norm<a class="anchor" aria-label="anchor" href="#norm"></a>
 </h4>
 <ul>
-<li><p><code>auto</code>: By default, automatically checks normality,
+<li><p><code>'auto'</code>: By default, automatically checks normality,
 but the same as <code>ask</code> when n &gt; 1000.</p></li>
-<li><p><code>ask</code>: Displays automatic result, QQ plots and prompts
-for manual confirmation.</p></li>
+<li><p><code>'ask'</code>: Displays automatic result, QQ plots and
+prompts for manual confirmation.</p></li>
 <li><p><code>true</code>: Treats all variables as normal.</p></li>
 <li><p><code>false</code>: Treats all variables as non-normal.</p></li>
 </ul>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">datalist</span> <span class="op">&lt;-</span> <span class="va">iris</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<code class="sourceCode R"><span><span class="va">data</span> <span class="op">&lt;-</span> <span class="va">iris</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="../reference/add_var.html">add_var</a></span><span class="op">(</span>var <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Sepal.Length"</span>, <span class="st">"Sepal.Width"</span><span class="op">)</span>, group <span class="op">=</span> <span class="st">"Species"</span>, norm <span class="op">=</span> <span class="st">"ask"</span><span class="op">)</span></span></code></pre></div>
 </div>
 </div>
@@ -123,7 +134,7 @@ group.</p>
 </h4>
 <p>Just input the result from add_var()</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">summary</span> <span class="op">&lt;-</span> <span class="va">datalist</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<code class="sourceCode R"><span><span class="va">summary</span> <span class="op">&lt;-</span> <span class="va">data</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="../reference/add_summary.html">add_summary</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p>If you want to custom the summary style, You can choose:</p>
 </div>
@@ -141,38 +152,38 @@ column.</p></li>
 </h4>
 <p>Format string to override both <code>norm_continuous_format</code>,
 and <code>unnorm_continuous_format</code>.</p>
-<p>Accepted placeholders are <code>{mean}</code>, <code>{SD}</code>,
-<code>{median}</code>, <code>{Q1}</code>, <code>{Q3}</code>.</p>
+<p>Accepted placeholders are <code>'{mean}'</code>, <code>'{SD}'</code>,
+<code>'{median}'</code>, <code>'{Q1}'</code>, <code>'{Q3}'</code>.</p>
 </div>
 <div class="section level4">
 <h4 id="norm_continuous_format">norm_continuous_format<a class="anchor" aria-label="anchor" href="#norm_continuous_format"></a>
 </h4>
-<p>Default is <code>{mean}</code> ± <code>{SD}</code>. Accepted
-placeholders same as <code>continuous_format</code>.</p>
+<p>Default is <code>'{mean} ± {SD}'</code>. Accepted placeholders same
+as <code>continuous_format</code>.</p>
 </div>
 <div class="section level4">
 <h4 id="unnorm_continuous_format">unnorm_continuous_format<a class="anchor" aria-label="anchor" href="#unnorm_continuous_format"></a>
 </h4>
-<p>Default is <code>{median} ({Q1}, {Q3})</code>. Accepted placeholders
-same as <code>continuous_format</code>.</p>
+<p>Default is <code>'{median} ({Q1}, {Q3})'</code>. Accepted
+placeholders same as <code>continuous_format</code>.</p>
 </div>
 <div class="section level4">
 <h4 id="categorical_format">categorical_format<a class="anchor" aria-label="anchor" href="#categorical_format"></a>
 </h4>
 <p>Format string for categorical variables. Default is
-<code>"{n} ({pct})"</code>. Accepted placeholders are <code>{n}</code>
-and <a href="https://itsleeds.github.io/pct/" class="external-link">pct</a>.</p>
+<code>'{n} ({pct})'</code>. Accepted placeholders are <code>'{n}'</code>
+and <code>'{pct}'</code>.</p>
 </div>
 <div class="section level4">
 <h4 id="binary_show">binary_show<a class="anchor" aria-label="anchor" href="#binary_show"></a>
 </h4>
 <ul>
-<li><p><code>last</code>: By default, show only last level.</p></li>
-<li><p><code>first</code>: Show only first level.</p></li>
-<li><p><code>all</code>: show all levels.</p></li>
+<li><p><code>'last'</code>: By default, show only last level.</p></li>
+<li><p><code>'first'</code>: Show only first level.</p></li>
+<li><p><code>'all'</code>: show all levels.</p></li>
 </ul>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">summary</span> <span class="op">&lt;-</span> <span class="va">datalist</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<code class="sourceCode R"><span><span class="va">summary</span> <span class="op">&lt;-</span> <span class="va">data</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="../reference/add_summary.html">add_summary</a></span><span class="op">(</span>add_overall <span class="op">=</span> <span class="cn">T</span>,</span>
 <span>              continuous_format <span class="op">=</span> <span class="st">"{mean} ± {SD}"</span>,</span>
 <span>              categorical_format <span class="op">=</span> <span class="st">"{n} ({pct})"</span>,</span>
@@ -209,7 +220,7 @@ the group.</p>
 <ul>
 <li><p><code>TRUE</code>: Show method text.</p></li>
 <li><p><code>FALSE</code>: By default, not show method text.</p></li>
-<li><p><code>code</code>: Show method as codes according to order of
+<li><p><code>'code'</code>: Show method as codes according to order of
 appearance.</p></li>
 </ul>
 </div>

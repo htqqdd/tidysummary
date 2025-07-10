@@ -31,12 +31,6 @@
     <loc>/reference/add_var.html</loc>
   </url>
   <url>
-    <loc>/reference/convert2.html</loc>
-  </url>
-  <url>
-    <loc>/reference/convert2factor.html</loc>
-  </url>
-  <url>
     <loc>/reference/equal_test.html</loc>
   </url>
   <url>
@@ -44,9 +38,6 @@
   </url>
   <url>
     <loc>/reference/index.html</loc>
-  </url>
-  <url>
-    <loc>/reference/my_round.html</loc>
   </url>
   <url>
     <loc>/reference/normal_test.html</loc>

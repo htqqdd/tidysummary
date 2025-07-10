@@ -7,7 +7,7 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
-tidysummary: A Elegant Approach to Summarizing Clinical Data.
+tidysummary: An Elegant Approach to Summarizing Clinical Data.
 
 The goal of tidysummary is to streamlines the analysis of clinical data by automatically selecting appropriate statistical descriptions and inference methods based on variable types.
 
@@ -17,6 +17,14 @@ knitr::opts_chunk$set(
   comment = "#>"
 )
 ```
+
+# Prepare your data
+
+A data frame containing the variables to analyze, with variables at columns and observations at rows:
+
+-   Continuous variables: Numeric.
+
+-   Categorical variables: Factor (Ordinal Categorical variables: ordered Factor).
 
 # add_var()
 
@@ -31,7 +39,7 @@ The add_var() function prepares your dataset for downstream analysis by classify
 Specify the variables to summarize in `var` and the grouping variable in `group`.
 
 ``` r
-datalist <- iris %>%
+data <- iris %>%
   add_var(var = c("Sepal.Length", "Sepal.Width"), group = "Species")
 ```
 
@@ -39,16 +47,16 @@ The function can automatically checks normality using statistical tests. You can
 
 ### norm
 
--   `auto`: By default, automatically checks normality, but the same as `ask` when n \> 1000.
+-   `'auto'`: By default, automatically checks normality, but the same as `ask` when n \> 1000.
 
--   `ask`: Displays automatic result, QQ plots and prompts for manual confirmation.
+-   `'ask'`: Displays automatic result, QQ plots and prompts for manual confirmation.
 
 -   `true`: Treats all variables as normal.
 
 -   `false`: Treats all variables as non-normal.
 
 ``` r
-datalist <- iris %>%
+data <- iris %>%
   add_var(var = c("Sepal.Length", "Sepal.Width"), group = "Species", norm = "ask")
 ```
 
@@ -63,7 +71,7 @@ A summary dataframe with rows as the variables and columns as the group.
 Just input the result from add_var()
 
 ``` r
-summary <- datalist %>%
+summary <- data %>%
   add_summary()
 ```
 
@@ -79,30 +87,30 @@ If you want to custom the summary style, You can choose:
 
 Format string to override both `norm_continuous_format`, and `unnorm_continuous_format`.
 
-Accepted placeholders are `{mean}`, `{SD}`, `{median}`, `{Q1}`, `{Q3}`.
+Accepted placeholders are `'{mean}'`, `'{SD}'`, `'{median}'`, `'{Q1}'`, `'{Q3}'`.
 
 ### norm_continuous_format
 
-Default is `{mean}` ± `{SD}`. Accepted placeholders same as `continuous_format`.
+Default is `'{mean} ± {SD}'`. Accepted placeholders same as `continuous_format`.
 
 ### unnorm_continuous_format
 
-Default is `{median} ({Q1}, {Q3})`. Accepted placeholders same as `continuous_format`.
+Default is `'{median} ({Q1}, {Q3})'`. Accepted placeholders same as `continuous_format`.
 
 ### categorical_format
 
-Format string for categorical variables. Default is `"{n} ({pct})"`. Accepted placeholders are `{n}` and `{pct}`.
+Format string for categorical variables. Default is `'{n} ({pct})'`. Accepted placeholders are `'{n}'` and `'{pct}'`.
 
 ### binary_show
 
--   `last`: By default, show only last level.
+-   `'last'`: By default, show only last level.
 
--   `first`: Show only first level.
+-   `'first'`: Show only first level.
 
--   `all`: show all levels.
+-   `'all'`: show all levels.
 
 ``` r
-summary <- datalist %>%
+summary <- data %>%
   add_summary(add_overall = T,
               continuous_format = "{mean} ± {SD}",
               categorical_format = "{n} ({pct})",
@@ -138,7 +146,7 @@ If you want to custom the summary_with_p column, You can choose:
 
 -   `FALSE`: By default, not show method text.
 
--   `code`: Show method as codes according to order of appearance.
+-   `'code'`: Show method as codes according to order of appearance.
 
 ### add_statistic_name
 

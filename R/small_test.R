@@ -7,18 +7,17 @@
 #' @param group A character string specifying the grouping variable in `data`.
 #'
 #' @return A character string with one of three values:
-#'   - `"not_small"`: Sample size >=40 and all expected frequencies >=5
-#'   - `"small"`: Sample size >=40, all expected frequencies >=1 and at least one <5, only for 2*2 contingency tables
+#'   - `"not_small"`: Sample size more than or euqal to 40 and all expected frequencies more than or euqal to 5
+#'   - `"small"`: Sample size more than or euqal to 40, all expected frequencies more than or euqal to 1 and at least one <5, only for 2*2 contingency tables
 #'   - `"very_small"`: Other conditions, including sample size <40 or any expected frequency <1
 #'
 #' @examples
-#' \dontrun{
 #' df <- data.frame(
 #'   category = factor(c("A", "B", "A", "B")),
 #'   group    = factor(c("X", "X", "Y", "Y"))
 #' )
 #' small_test(data = df, var = "category", group = "group")
-#' }
+#'
 #' @export
 small_test <- function(data, var, group){
 

@@ -21,10 +21,18 @@
 #'         - Optional method names/codes
 #'         - Optional statistic names/values
 #'
+#' @examples
+#' # `summary` is a data frame processed by `add_var()` and `add_summary()`:
+#' data <- add_var(iris, var = c("Sepal.Length", "Species"), group = "Species")
+#' summary <- add_summary(data)
+#'
+#' # Add statistical test results
+#' result <- add_p(summary)
+#'
 #' @export
-add_p <- function(summary, digit = 3, asterisk = F,
-                  add_method = F, add_statistic_name = F, add_statistic_value = F){
-  #检查add_var属性
+add_p <- function(summary, digit = 3, asterisk = FALSE,
+                  add_method = FALSE, add_statistic_name = FALSE, add_statistic_value = FALSE){
+  #检查add_summary属性
   if (!"add_summary" %in% names(attributes(summary))) {
     cli_alert_danger("must use add_summary() for 'summary' before using add_p()")
     stop()
@@ -147,21 +155,20 @@ add_p <- function(summary, digit = 3, asterisk = F,
       if (v %in% norm_unequal_var) {
         method[[v]] <- "Welch's t-test"
         p_result <- t.test(data[[v]] ~ data[[group]], var.equal = FALSE)
-        is.numeric(NaN)
         p[[v]] <- format_p(p_result$p.value, digit, asterisk)
         statistic_name[[v]] <- names(p_result$statistic)
         statistic_value[[v]] <- my_round(p_result$statistic, digit)
       }
       if (v %in% unnorm_var) {
         method[[v]] = "Mann-Whitney U test"
-        p_result <- wilcox.test(data[[v]] ~ data[[group]])
+        p_result <- suppressWarnings(wilcox.test(data[[v]] ~ data[[group]]))
         p[[v]] <- format_p(p_result$p.value, digit, asterisk)
         statistic_name[[v]] <- names(p_result$statistic)
         statistic_value[[v]] <- my_round(p_result$statistic, digit)
       }
       if (v %in% rank_var) {
         method[[v]] = "Mann-Whitney U test"
-        p_result <- wilcox.test(data[[v]] ~ data[[group]])
+        p_result <- suppressWarnings(wilcox.test(data[[v]] ~ data[[group]]))
         p[[v]] <- format_p(p_result$p.value, digit, asterisk)
         statistic_name[[v]] <- names(p_result$statistic)
         statistic_value[[v]] <- my_round(p_result$statistic, digit)

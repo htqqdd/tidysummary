@@ -21,7 +21,7 @@ add_var(data, var = NULL, group = "group", norm = "auto", center = "median")
 \item \code{FALSE}/\code{'false'}: Always assuming data are non-normally distributed
 }}
 
-\item{center}{A character string specifying the center to use in Levene's test for equality of variances. Default is \code{"median"}, which is more robust than the mean.}
+\item{center}{A character string specifying the \code{center} to use in Levene's test for equality of variances. Default is \code{'median'}, which is more robust than the mean.}
 }
 \value{
 A modified data frame with an attribute \code{'add_var'} containing a list of categorized variables and their properties:
@@ -41,10 +41,9 @@ A modified data frame with an attribute \code{'add_var'} containing a list of ca
 }
 }
 \description{
-This function processes a dataset for statistical analysis by categorizing variables into continuous and categorical types, performing validity checks, and applying necessary conversions. It automatically handles normality checks, equality of variances checks, and expected frequency assumptions checks.
+This function processes a dataset for statistical analysis by categorizing variables into continuous and categorical types. It automatically handles normality checks, equality of variances checks, and expected frequency assumptions checks.
 }
 \examples{
-\dontrun{
-datalist <- add_var(iris, var = c("Sepal.Length", "Species"), group = "Species")
-}
+data <- add_var(iris, var = c("Sepal.Length", "Species"), group = "Species")
+
 }
