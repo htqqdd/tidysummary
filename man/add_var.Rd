@@ -44,6 +44,6 @@ A modified data frame with an attribute \code{'add_var'} containing a list of ca
 This function processes a dataset for statistical analysis by categorizing variables into continuous and categorical types. It automatically handles normality checks, equality of variances checks, and expected frequency assumptions checks.
 }
 \examples{
-data <- add_var(iris, var = c("Sepal.Length", "Species"), group = "Species")
+data <- add_var(iris, var = c("Sepal.Length", "Sepal.Width"), group = "Species")
 
 }

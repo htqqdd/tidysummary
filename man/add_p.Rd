@@ -48,7 +48,7 @@ Calculates and appends p-values with optional statistical details to a summary t
 }
 \examples{
 # `summary` is a data frame processed by `add_var()` and `add_summary()`:
-data <- add_var(iris, var = c("Sepal.Length", "Species"), group = "Species")
+data <- add_var(iris, var = c("Sepal.Length", "Sepal.Width"), group = "Species")
 summary <- add_summary(data)
 
 # Add statistical test results

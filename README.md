@@ -8,13 +8,17 @@ The goal of tidysummary is to streamlines the analysis of clinical data by autom
 
 ## Installation
 
-You can install the development version of tidysummary like so:
+You can install the released version of tidysummary from CRAN with:
 
 ``` r
-if (!requireNamespace("remotes", quietly = TRUE)) {
-  install.packages("remotes")
-}
-remotes::install_github("htqqdd/tidysummary")
+install.packages("tidysummary")
+```
+
+And the development version from GitHub with:
+
+``` r
+# install.packages("pak")
+pak::pak("htqqdd/tidysummary")
 ```
 
 ## Usage

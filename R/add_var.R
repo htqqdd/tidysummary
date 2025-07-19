@@ -29,7 +29,7 @@
 #' }
 #'
 #' @examples
-#' data <- add_var(iris, var = c("Sepal.Length", "Species"), group = "Species")
+#' data <- add_var(iris, var = c("Sepal.Length", "Sepal.Width"), group = "Species")
 #'
 #' @export
 add_var <- function(data, var = NULL, group = "group", norm = "auto", center = "median"){

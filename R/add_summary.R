@@ -113,7 +113,7 @@ create_summary <- function(data, v = NULL, group = NULL, summary_format = NULL, 
 #'
 #' @examples
 #' # `data` is a data frame processed by `add_var()`:
-#' data <- add_var(iris, var = c("Sepal.Length", "Species"), group = "Species")
+#' data <- add_var(iris, var = c("Sepal.Length", "Sepal.Width"), group = "Species")
 #' # Add summary statistics
 #' result <- add_summary(data, add_overall = TRUE)
 #' result <- add_summary(data, continuous_format = "{mean}, ({SD})")
