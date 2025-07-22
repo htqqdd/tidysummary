@@ -76,7 +76,7 @@ normal_test <- function(data = NULL, var = NULL, group = NULL, norm = "auto"){
     group_by(!!sym(group_var)) %>%
     summarise(
       p.value = {
-        n_val = n()
+        n_val = sum(!is.na(.data[[var]])) #计算非NA值的数量
         case_when(
           n_val < 3 ~ NA,
           n_val <= 50 ~ tryCatch(stats::shapiro.test(.data[[var]])$p.value, error = function(e) NA),

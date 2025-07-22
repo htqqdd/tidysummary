@@ -138,7 +138,16 @@ add_p <- function(summary, digit = 3, asterisk = FALSE,
       }
       if (v %in% very_small_var) {
         method[[v]] = "Fisher's exact test"
-        p_result <- suppressWarnings(fisher.test(data[[v]], data[[group]]))
+        p_result <- tryCatch(
+          suppressWarnings(fisher.test(data[[v]], data[[group]])),
+          error = function(e) { #处理workspace太小的情况
+            if (grepl("LDSTP", e$message) | grepl("LDKEY", e$message)) {
+              suppressWarnings(fisher.test(data[[v]], data[[group]], simulate.p.value = TRUE))
+            } else {
+              stop(e)
+            }
+          }
+        )
         p[[v]] <- format_p(p_result$p.value, digit, asterisk)
         statistic_name[[v]] <- "\u2014"
         statistic_value[[v]] <- "\u2014"
@@ -189,7 +198,16 @@ add_p <- function(summary, digit = 3, asterisk = FALSE,
       }
       if (v %in% very_small_var) {
         method[[v]] = "Fisher's exact test"
-        p_result <- suppressWarnings(fisher.test(data[[v]], data[[group]]))
+        p_result <- tryCatch(
+          suppressWarnings(fisher.test(data[[v]], data[[group]])),
+          error = function(e) { #处理workspace太小的情况
+            if (grepl("LDSTP", e$message) | grepl("LDKEY", e$message)) {
+              suppressWarnings(fisher.test(data[[v]], data[[group]], simulate.p.value = TRUE))
+            } else {
+              stop(e)
+            }
+          }
+        )
         p[[v]] <- format_p(p_result$p.value, digit, asterisk)
         statistic_name[[v]] <- "\u2014"
         statistic_value[[v]] <- "\u2014"
